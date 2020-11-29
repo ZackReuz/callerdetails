@@ -11,22 +11,31 @@
 <body>
     <div class="container ">
 
+        <?php
+        $mobile = $_GET['mobile'];
 
 
 
-        <form class="mt-5">
-            <div class="form-group ">
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "callerdetails";
 
-                <label>Mobile Number</label>
-                <input type="tel" class="form-control " maxlength="10 ">
-                <small id="emailHelp " class="form-text text-muted ">Enter Number from INDIA only</small>
-            </div>
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $database);
 
-            <button type="submit " class="btn btn-primary ">Search</button>
-        </form>
-        <!-- <div class="  row-col-10 mt-5 border border-secondary border-left-0 border-right-0  ">
-            <h4 class="">Name</h4>
-        </div> -->
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } else {
+            // echo "Connected successfully";
+        }
+
+        // Query to select details of mobile number 
+        $sql = "SELECT * FROM details WHERE mobile='$mobile'";
+        $result = $conn->query($sql);
+        ?>
+
         <table class="table mt-4">
             <thead class="thead-light ">
                 <tr>
@@ -37,22 +46,40 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Yashensha</td>
-                    <td>Kasaragod ,Kerala</td>
-                    <td>Jio</td>
-                </tr>
+
+
+                <?php
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr> <td> " . $row["callerName"] . "</td><td>" . $row["location"] . " </td><td>" . $row["operator"] . "</td></tr>";
+                    }
+                }
+                $conn->close();
+                ?>
+
+
+
+
+
+
 
             </tbody>
         </table>
 
 
-        <div class="text-center">
+        <?php
 
-            <h3 class="text-muted text-monospace">Not Founded :(</h3>
-            <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">
+        if ($result->num_rows == 0) {
+            echo "<h3 class='text-center text-muted text-monospace'>Not Found</h3>";
+            echo "<button class='d-block m-auto btn btn-primary mt-4' data-toggle='modal' data-target='#exampleModal'>Add</button>";
+        }
+        ?>
+        <!-- <h3 class="text-muted text-monospace">Not Founded :(</h3>
+        <button type="button" class="" data-toggle="modal" data-target="#exampleModal">
             Add
-        </button></div>
+        </button> -->
+
 
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,8 +88,8 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -99,6 +126,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
