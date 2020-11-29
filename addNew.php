@@ -21,14 +21,14 @@
         $sql = "INSERT INTO details values ('$mobile','$caller','$location','$operator');";
         
         if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+            echo "<h3>Details added successfully</h3>";
           } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
           }
           
           $conn->close();
         ?>
-        <a href="./index.php">Go to Home</a>
+        <a class="btn btn-link" href="./index.php">Go to Home</a>
 
     </div>
 

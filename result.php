@@ -27,23 +27,30 @@
             <thead class="thead-light ">
                 <tr>
 
-                    <th scope="col">Name</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Operator</th>
+
+
+
+
+
+                    <?php
+                    if ($result->num_rows > 0) {
+                        echo "<th>Name</th>";
+                        echo "<th>Location</th>";
+                        echo "<th>Operator</th>";
+                    ?>
                 </tr>
             </thead>
             <tbody>
+            <?php
 
 
-                <?php
-                if ($result->num_rows > 0) {
-                    // output data of each row
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr> <td> " . $row["callerName"] . "</td><td>" . $row["location"] . " </td><td>" . $row["operator"] . "</td></tr>";
+                        // output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr> <td> " . $row["callerName"] . "</td><td>" . $row["location"] . " </td><td>" . $row["operator"] . "</td></tr>";
+                        }
                     }
-                }
-                $conn->close();
-                ?>
+                    $conn->close();
+            ?>
 
 
 
@@ -58,7 +65,7 @@
         <?php
 
         if ($result->num_rows == 0) {
-            echo "<h3 class='text-center text-muted text-monospace'>Not Found</h3>";
+            echo "<h3 class='text-center text-muted text-monospace'>Not Found :(</h3>";
             echo "<button class='d-block m-auto btn btn-primary mt-4' data-toggle='modal' data-target='#exampleModal'>Add</button>";
         }
         ?>
