@@ -14,22 +14,9 @@
         <?php
         $mobile = $_GET['mobile'];
 
+        include './connection.php';
 
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "callerdetails";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        } else {
-            // echo "Connected successfully";
-        }
 
         // Query to select details of mobile number 
         $sql = "SELECT * FROM details WHERE mobile='$mobile'";
@@ -91,38 +78,35 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
+                    <form action="addNew.php" method="POST">
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="">Mobile Number</label>
+                                <input type="text" name="mobileNumber" value="<?php echo $mobile; ?>" class="form-control" id="">
+                            </div>
+
                             <div class="form-group">
                                 <label for="">Name</label>
-                                <input type="text" class="form-control" id="" aria-describedby="emailHelp">
+                                <input type="text" name="callerName" class="form-control" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Location</label>
-                                <input type="text" class="form-control" id="">
+                                <input type="text" name="location" class="form-control" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Operator</label>
-                                <input type="text" class="form-control" id="">
+                                <input type="text" name="Operator" class="form-control" id="">
                             </div>
 
-                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                        </form>
 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
 
-
-
-
-
-
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
                 </div>
             </div>
         </div>
